@@ -7,7 +7,7 @@ class V1::RoomsController < ApplicationController
   end
 
   def show
-    room = Room.find(params[:id])
+    room = Room.where(:name => params[:id]).first
 
     render json: room, status: 201, root: false
   end
