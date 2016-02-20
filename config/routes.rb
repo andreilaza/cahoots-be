@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
       resources :rooms, :only => [:index]
       resources :users, :only => [:create]
+
+      post 'pusher/auth', to: 'pusher#auth'
     end    
   end  
 end
