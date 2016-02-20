@@ -39,10 +39,11 @@ class V1::RoomsController < ApplicationController
 
   def add_users
     user = User.new(user_params)
-    user.auth_token = SecureRandom.base64(20)
-    user.room_id = params[:id]
+    user.auth_token = SecureRandom.base64(20)    
 
-    room = Room.find(params[:id])
+    room = Room.where(:name => params[:id]).first
+
+    user.room_id = room.id
 
     if user.save
       render json: room, status: 201, root: false
