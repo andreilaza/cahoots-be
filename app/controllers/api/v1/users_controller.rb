@@ -3,12 +3,12 @@ class Api::V1::UsersController < ApplicationController
   
   def create
     user = User.new(user_params)
-    user.auth_token = SecureRandom.base64(24)
+    user.auth_token = SecureRandom.base64(20)
 
     if user.save
       render json: user, status: 201, root: false
     else
-      render json: { errors: course.errors }, status: 422
+      render json: { errors: user.errors }, status: 422
     end
   end
 
