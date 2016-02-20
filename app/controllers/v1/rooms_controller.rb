@@ -9,7 +9,11 @@ class V1::RoomsController < ApplicationController
   def show
     room = Room.where(:name => params[:id]).first
 
-    render json: room, status: 201, root: false
+    if room
+      render json: room, status: 200, root: false
+    else
+      render json: { errors: "Room not found"}, status: 404, root: false
+    end
   end
 
   def create
