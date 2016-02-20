@@ -1,6 +1,6 @@
 require 'pusher'
 
-class Api::V1::PusherController < ApplicationController
+class V1::PusherController < ApplicationController
   # before_action :authenticate_with_token!
   def auth
     Pusher.app_id = '181477'

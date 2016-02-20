@@ -1,15 +1,14 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
-  namespace :api, defaults: { format: :json },
-                            constraints: { subdomain: 'api' }, path: '/'  do
-    scope module: :v1,
-            constraints: ApiConstraints.new(version: 1, default: true) do
+  
+  scope module: :v1,
+          constraints: ApiConstraints.new(version: 1, default: true) do
 
-      resources :rooms, :only => [:index]
-      resources :users, :only => [:create]
+    resources :rooms, :only => [:index]
+    resources :users, :only => [:create]
 
-      post 'pusher/auth', to: 'pusher#auth'
-    end    
-  end  
+    post 'pusher/auth', to: 'pusher#auth'
+  end    
+  
 end
