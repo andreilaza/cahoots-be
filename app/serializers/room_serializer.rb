@@ -1,3 +1,4 @@
 class RoomSerializer < ActiveModel::Serializer
-  attributes :id, :name, :user, :created_at, :updated_at
+  attributes :id, :name, :users, :auth_token, :created_at, :updated_at
+  has_many :users
 end
