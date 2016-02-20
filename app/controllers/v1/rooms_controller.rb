@@ -1,6 +1,6 @@
 class V1::RoomsController < ApplicationController
   respond_to :json
-  before_action :authenticate_with_token!
+  before_action :authenticate_with_token!, only: [:index]
   
   def index
     render json: 'asg', root: false
@@ -15,11 +15,11 @@ class V1::RoomsController < ApplicationController
 
     if room.save
       if user.save
-        room = ActiveSupport::JSON.decode(room.to_json)
+        # room = ActiveSupport::JSON.decode(room.to_json)
 
-        room['user'] = ActiveSupport::JSON.decode(user.to_json)
-
-        render json: room, status: 201, root: false
+        # room['user'] = ActiveSupport::JSON.decode(user.to_json)
+        room.user = user
+        render json: room, serializer: RoomSerializer, status: 201, root: false
       else
         render json: user.errors, status: 201, root: false
       end      
