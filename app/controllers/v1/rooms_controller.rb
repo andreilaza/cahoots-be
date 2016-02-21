@@ -1,3 +1,5 @@
+require 'em-http-request'
+
 class V1::RoomsController < ApplicationController
   respond_to :json
   before_action :authenticate_with_token!, only: [:index]#, :lock]
@@ -34,7 +36,7 @@ class V1::RoomsController < ApplicationController
       end      
     else
       render json: { errors: room.errors }, status: 422
-    end
+    end    
   end
 
   def add_users

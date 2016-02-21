@@ -11,7 +11,7 @@ class V1::UsersController < ApplicationController
       unique = false
 
       while unique == false do
-        append = rand(1..9999)
+        append = rand(1..99)
         name = params[:name] + append.to_s
         new_existing = User.where(:name => name).first
         

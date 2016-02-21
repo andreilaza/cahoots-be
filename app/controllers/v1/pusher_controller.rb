@@ -37,21 +37,25 @@ class V1::PusherController < ApplicationController
   end
 
   def receive
-    options = { secure: true }
-    socket = PusherClient::Socket.new('765cd15f07fbd9b7ec2a', options)
-    socket.connect(true)
-    
-    socket.subscribe('private-room-foo-red')
+    Thread.new {
+      options = { secure: true }
+      socket = PusherClient::Socket.new('765cd15f07fbd9b7ec2a', { :encrypted => true, :secret => 'e0f1ec431f4df014af97' } )
 
-    socket['private-room-foo-red'].bind('client-partial-message') do |data|
-      pusher_event = PusherEvent.new()
-      pusher_event.event = data
-      pusher_event.save      
-    end
+      socket.connect(true)
+      room_name = "private-room-" + params[:room_name] + "-server"
+      socket.subscribe(room_name)
 
-    loop do
-      sleep 1
-    end
+      socket[room_name].bind('client-activity-event') do |data|
+        pusher_event = PusherEvent.new()
+        pusher_event.event = data
+        pusher_event.save      
+      end
+
+      loop do
+        sleep 1
+      end
+    }
+    render json: 'ok', root: false, status: 200
   end
 
   def index

@@ -10,9 +10,9 @@ Rails.application.routes.draw do
 
     # Pusher routes
     post 'pusher/auth', to: 'pusher#auth'
-    get 'pusher/publish', to: 'pusher#publish'
-    get 'pusher/receive', to: 'pusher#receive'
-    get 'pusher', to: 'pusher#index'
+    # get 'pusher/publish', to: 'pusher#publish'
+    post 'pusher/:room_name/receive', to: 'pusher#receive'
+    get 'activity', to: 'pusher#index'
 
     # Room routes
     post 'rooms/:id/users', to: 'rooms#add_users'
