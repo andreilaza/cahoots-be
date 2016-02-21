@@ -55,7 +55,7 @@ class V1::PusherController < ApplicationController
         sleep 1
       end
     }
-    render json: 'ok', root: false, status: 200
+    render json: {"success" => "ok"}, root: false, status: 200
   end
 
   def index
