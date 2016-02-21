@@ -1,6 +1,6 @@
 class V1::RoomsController < ApplicationController
   respond_to :json
-  before_action :authenticate_with_token!, only: [:index]
+  before_action :authenticate_with_token!, only: [:index]#, :lock]
   
   def index
     render json: 'asg', root: false
@@ -49,6 +49,18 @@ class V1::RoomsController < ApplicationController
       render json: room, status: 201, root: false
     else
       render json: { errors: user.errors }, status: 422
+    end
+  end
+
+  def lock
+    room = Room.where(:name => params[:id]).first
+
+    room.locked = params[:lock]
+
+    if room.save
+      render json: room, status: 201, root: false
+    else
+      render json: { errors: room.errors }, status: 422
     end
   end
 

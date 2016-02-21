@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
     post 'pusher/auth', to: 'pusher#auth'
 
+    # Room routes
     post 'rooms/:id/users', to: 'rooms#add_users'
+    post 'rooms/:id/lock', to: 'rooms#lock'
   end
   
 end
