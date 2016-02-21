@@ -45,6 +45,25 @@ class V1::RoomsController < ApplicationController
 
     user.room_id = room.id
 
+    existing = User.where(:name => params[:name]).first
+
+    if existing
+      unique = false
+
+      while unique == false do
+        append = rand(1..9999)
+        name = params[:name] + append.to_s        
+        new_existing = User.where(:name => name).first
+        
+        if new_existing
+          unique = false
+        else
+          unique = true
+          user.name = name
+        end
+      end      
+    end    
+    
     if user.save
       render json: room, status: 201, root: false
     else
