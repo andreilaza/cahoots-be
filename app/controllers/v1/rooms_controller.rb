@@ -88,7 +88,14 @@ class V1::RoomsController < ApplicationController
 
   def activity
     events = PusherEvent.where(:room => params[:id]).all
-    render json: events, root: false, status: 200
+
+    response = []
+
+    events.each do |event|
+      response.push(ActiveSupport::JSON.decode(event.event))
+    end
+
+    render json: response, root: false, status: 200
   end
 
   def lock
