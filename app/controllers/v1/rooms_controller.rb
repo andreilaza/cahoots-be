@@ -7,7 +7,7 @@ class V1::RoomsController < ApplicationController
   end
 
   def show
-    room = Room.where('id' => params[:id]).first
+    room = Room.where(:name => params[:id]).first
 
     if room
       render json: room, status: 200, root: false
@@ -41,7 +41,7 @@ class V1::RoomsController < ApplicationController
     user = User.new(user_params)
     user.auth_token = SecureRandom.base64(20)    
 
-    room = Room.where('id' => params[:id]).first
+    room = Room.where(:name => params[:id]).first
 
     user.room_id = room.id
 
@@ -53,9 +53,9 @@ class V1::RoomsController < ApplicationController
   end
 
   def remove_user
-    room = Room.where('id' => params[:id]).first
+    room = Room.where(:name => params[:id]).first
 
-    user = User.where('id' => params[:user_id], 'room_id' => params[:id]).first
+    user = User.where('id' => params[:user_id], 'room_id' => room.id).first
 
     if user
       user.destroy
@@ -65,7 +65,7 @@ class V1::RoomsController < ApplicationController
     end
   end
   def lock
-    room = Room.where(:id => params[:id]).first
+    room = Room.where(:name => params[:id]).first
 
     room.locked = params[:lock]
 
