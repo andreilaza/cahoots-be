@@ -40,6 +40,8 @@ gem 'responders', '~> 2.0'
 gem 'devise'
 
 gem 'pusher'
+gem 'pusher-client'
+gem 'em-http-request'
 
 gem 'tunnels'
 

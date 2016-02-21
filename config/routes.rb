@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     resources :rooms, :only => [:index, :create, :show]
     resources :users, :only => [:create]
 
+    # Pusher routes
     post 'pusher/auth', to: 'pusher#auth'
+    get 'pusher/publish', to: 'pusher#publish'
+    get 'pusher/receive', to: 'pusher#receive'
+    get 'pusher', to: 'pusher#index'
 
     # Room routes
     post 'rooms/:id/users', to: 'rooms#add_users'
