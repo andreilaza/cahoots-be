@@ -46,8 +46,9 @@ class V1::PusherController < ApplicationController
       socket.subscribe(room_name)
 
       socket[room_name].bind('client-activity-event') do |data|
-        pusher_event = PusherEvent.new()
+        pusher_event = PusherEvent.new()        
         pusher_event.event = data
+        pusher_event.room = params[:room_name]
         pusher_event.save      
       end
 

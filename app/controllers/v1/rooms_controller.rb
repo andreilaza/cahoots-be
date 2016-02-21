@@ -85,6 +85,12 @@ class V1::RoomsController < ApplicationController
       render json: { errors: "User not found" }, status: 404
     end
   end
+
+  def activity
+    events = PusherEvent.where(:room => params[:id]).all
+    render json: events, root: false, status: 200
+  end
+
   def lock
     room = Room.where(:name => params[:id]).first
 
