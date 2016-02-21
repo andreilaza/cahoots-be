@@ -69,6 +69,27 @@ class V1::RoomsController < ApplicationController
 
     room.locked = params[:lock]
 
+    if params[:lock] == true
+      unique = false
+      
+      while unique == false do
+        pin = rand(1000..9999)
+
+        unique_pin = Room.where(:pin => pin).first
+
+        if unique_pin
+          unique = false
+        else
+          unique = true
+          room.pin = pin
+        end
+      end      
+    end
+
+    if params[:lock] == false
+      room.pin = nil
+    end
+
     if room.save
       render json: room, status: 201, root: false
     else
