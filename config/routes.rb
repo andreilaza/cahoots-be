@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     # Room routes
     post 'rooms/:id/users', to: 'rooms#add_users'
     post 'rooms/:id/lock', to: 'rooms#lock'
+    delete 'rooms/:id/users/:user_id', to: 'rooms#remove_user'
   end
   
 end

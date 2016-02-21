@@ -52,6 +52,18 @@ class V1::RoomsController < ApplicationController
     end
   end
 
+  def remove_user
+    room = Room.where(:name => params[:id]).first
+
+    user = User.where('id' => params[:user_id]).first
+
+    if user
+      user.destroy
+      render json: room, status: 201, root: false
+    else
+      render json: { errors: "User not found" }, status: 404
+    end
+  end
   def lock
     room = Room.where(:name => params[:id]).first
 
