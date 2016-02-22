@@ -47,13 +47,13 @@ class V1::RoomsController < ApplicationController
 
     user.room_id = room.id
 
-    existing = User.where(:name => params[:name]).first
+    existing = User.where(:name => params[:name], :room_id => room.id).first
 
     if existing
       unique = false
 
       while unique == false do
-        append = rand(1..9999)
+        append = rand(1..99)
         name = params[:name] + append.to_s        
         new_existing = User.where(:name => name).first
         
